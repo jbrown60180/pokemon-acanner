@@ -1,37 +1,39 @@
 const scanButton = document.getElementById("scanButton");
+const captureButton = document.getElementById("captureButton");
 
-scanButton.addEventListener("click", async () => {
-    try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: "environment"
-            }
-        });
+const video = document.getElementById("camera");
+const canvas = document.getElementById("snapshot");
+const preview = document.getElementById("preview");
 
-        showCamera(stream);
+let stream;
 
-    } catch (error) {
-        alert("Unable to access the camera.");
-        console.error(error);
-    }
-});
+scanButton.onclick = async () => {
 
-function showCamera(stream) {
-
-    let video = document.getElementById("camera");
-
-    if (!video) {
-
-        video = document.createElement("video");
-        video.id = "camera";
-        video.autoplay = true;
-        video.playsInline = true;
-        video.style.width = "100%";
-        video.style.marginTop = "20px";
-        video.style.borderRadius = "15px";
-
-        document.querySelector("main").appendChild(video);
-    }
+    stream = await navigator.mediaDevices.getUserMedia({
+        video:{
+            facingMode:"environment"
+        }
+    });
 
     video.srcObject = stream;
+
+    video.style.display="block";
+
+    captureButton.style.display="inline-block";
+
+}
+
+captureButton.onclick = ()=>{
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    ctx.drawImage(video,0,0);
+
+    preview.src = canvas.toDataURL("image/png");
+
+    preview.style.display="block";
+
 }
