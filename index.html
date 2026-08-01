@@ -18,9 +18,26 @@
 
 <div class="card">
     <h2>📷 Scan Card</h2>
-    <button id="scanButton">
-        Start Scanner
+
+    <video id="camera"
+           autoplay
+           playsinline
+           style="display:none;width:100%;border-radius:15px;"></video>
+
+    <canvas id="snapshot"
+            style="display:none;"></canvas>
+
+    <img id="preview"
+         style="display:none;width:100%;border-radius:15px;margin-top:15px;">
+
+    <br><br>
+
+    <button id="scanButton">Start Camera</button>
+
+    <button id="captureButton" style="display:none;">
+        📸 Capture Card
     </button>
+
 </div>
 
 <div class="card">
