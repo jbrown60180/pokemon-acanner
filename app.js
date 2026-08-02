@@ -1,3 +1,6 @@
+const API_KEY = "696bc2a0-fca5-4c63-8861-60590a2c6a7d";
+const API_URL = "https://api.pokemontcg.io/v2/cards";
+
 const scanButton = document.getElementById("scanButton");
 const captureButton = document.getElementById("captureButton");
 
@@ -34,3 +37,27 @@ captureButton.onclick = () => {
     preview.src = canvas.toDataURL("image/png");
     preview.style.display = "block";
 };
+
+async function testCardLookup() {
+    try {
+        const response = await fetch(`${API_URL}?q=name:pikachu`, {
+            headers: {
+                "X-Api-Key": API_KEY
+            }
+        });
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.data.length > 0) {
+            alert("Success! Found: " + data.data[0].name);
+        } else {
+            alert("No cards found.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Error connecting to Pokémon TCG API.");
+    }
+}
