@@ -136,9 +136,33 @@ async function findCard(cardText) {
     .map(line => line.trim())
     .filter(line => line.length > 0);
 
-const possibleNames = lines.slice(0, 5);
+// Ignore words that are not Pokémon names
+const ignoredWords = [
+  "HP", "BASIC", "STAGE", "POKÉMON", "POKEMON",
+  "TRAINER", "ENERGY", "WEAKNESS", "RESISTANCE",
+  "RETREAT", "ABILITY", "ITEM", "SUPPORTER", "TOOL"
+];
 
-const name = possibleNames[0];
+// Find the first line that looks like a Pokémon name
+let name = lines.find(line => {
+  const text = line.trim();
+
+  // Skip empty lines
+  if (!text) return false;
+
+  // Skip numbers and HP values
+  if (/^\d+$/.test(text) || text.includes("HP")) return false;
+
+  // Skip common card words
+  if (ignoredWords.includes(text.toUpperCase())) return false;
+
+  return true;
+});
+
+if (!name) {
+  result.innerHTML = "<p>Couldn't identify the card name.</p>";
+  return;
+}
 
 
         if (!name) {
