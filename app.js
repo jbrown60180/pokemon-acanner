@@ -129,12 +129,14 @@ async function findCard(cardText) {
     try {
 
 
-        const lines = cardText.split("\n");
+        const lines = cardText
+    .split("\n")
+    .map(line => line.trim())
+    .filter(line => line.length > 0);
 
-        const name = lines.find(line =>
-            /^[A-Za-z\s\-]+$/.test(line) &&
-            line.length > 2
-        );
+const possibleNames = lines.slice(0, 5);
+
+const name = possibleNames[0];
 
 
         if (!name) {
@@ -145,7 +147,7 @@ async function findCard(cardText) {
 
 
         const response = await fetch(
-            `${API_URL}?q=name:${name}`,
+            ,`${API_URL}?q=name:"${name}"`
 
             {
                 headers: {
