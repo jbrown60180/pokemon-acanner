@@ -95,18 +95,16 @@ async function recognizeCard(imageBase64) {
         console.log(data);
 
 
-        const text =
-    data.responses[0]?.fullTextAnnotation?.text || "";
-
-console.log("Vision read:", text);
-alert("Vision read:\n\n" + text);
+        const cardText =
+            data.responses[0]?.fullTextAnnotation?.text || "";
 
 
+        alert("Vision read:\n\n" + cardText);
 
 
-        if (text) {
+        if (cardText) {
 
-            await findCard(text);
+            await findCard(cardText);
 
         } else {
 
