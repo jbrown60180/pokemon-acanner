@@ -84,13 +84,53 @@ async function recognizeCard(imageBase64) {
             data.responses[0]?.fullTextAnnotation?.text || "";
 
         if (text) {
-            alert("Card text found:\n\n" + text);
-        } else {
-            alert("No text found. Try taking a clearer picture.");
-        }
+    findCard(text);
+} else {
+    alert("No text found. Try taking a clearer picture.");
+}
 
     } catch (error) {
         console.error(error);
         alert("Vision error: " + error.message);
+    }
+}
+
+async function findCard(cardText) {
+
+    try {
+
+        const name = cardText.split("\n")[0];
+
+        const response = await fetch(
+            `${API_URL}?q=name:${name}`,
+            {
+                headers: {
+                    "X-Api-Key": API_KEY
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        console.log(data);
+
+        if (data.data && data.data.length > 0) {
+
+            const card = data.data[0];
+
+            alert(
+                "Found Card:\n\n" +
+                card.name +
+                "\nSet: " + card.set.name +
+                "\nRarity: " + card.rarity
+            );
+
+        } else {
+            alert("Card not found in database.");
+        }
+
+    } catch(error) {
+        console.error(error);
+        alert("Card search error: " + error.message);
     }
 }
