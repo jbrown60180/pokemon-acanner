@@ -33,7 +33,8 @@ scanButton.onclick = async () => {
     }
 };
 
-captureButton.onclick = () => {
+captureButton.onclick = async () => {
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
@@ -42,32 +43,56 @@ captureButton.onclick = () => {
 
     preview.src = canvas.toDataURL("image/png");
     preview.style.display = "block";
+
+    const imageBase64 = canvas.toDataURL("image/png").split(",")[1];
+
+    await recognizeCard(imageBase64);
 };
 
-async function testCardLookup() {
-    try {
-        const response = await fetch(`${API_URL}?q=name:pikachu`, {
-            headers: {
-                "X-Api-Key": API_KEY
-            }
-        });
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
+async function recognizeCard(imageBase64) {
+
+    try {
+
+        const response = await fetch(
+            `https://vision.googleapis.com/v1/images:annotate?key=${VISION_KEY}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    requests: [
+                        {
+                            image: {
+                                content: imageBase64
+                            },
+                            features: [
+                                {
+                                    type: "TEXT_DETECTION"
+                                }
+                            ]
+                        }
+                    ]
+                })
+            }
+        );
 
         const data = await response.json();
 
         console.log(data);
 
-        if (data.data && data.data.length > 0) {
-            alert("✅ Success! Found: " + data.data[0].name);
+        const text =
+            data.responses[0]?.fullTextAnnotation?.text || "";
+
+        if (text) {
+            alert("Card text found:\n\n" + text);
         } else {
-            alert("No cards found.");
+            alert("No text found. Try taking a clearer picture.");
         }
 
     } catch (error) {
         console.error(error);
-        alert("Error connecting to Pokémon TCG API: " + error.message);
+        alert("Vision error: " + error.message);
     }
 }
