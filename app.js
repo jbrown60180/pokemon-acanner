@@ -1,3 +1,5 @@
+alert("App.js loaded");
+
 const API_KEY = "696bc2a0-fca5-4c63-8861-60590a2c6a7d";
 const API_URL = "https://api.pokemontcg.io/v2/cards";
 
