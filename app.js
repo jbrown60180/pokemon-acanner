@@ -3,6 +3,7 @@ const API_URL = "https://api.pokemontcg.io/v2/cards";
 
 const VISION_KEY = "AIzaSyAEJ6wn4pXm4bh3w0IXxdCmdNHoT6yPUb4";
 
+
 const scanButton = document.getElementById("scanButton");
 const captureButton = document.getElementById("captureButton");
 
@@ -71,9 +72,7 @@ async function recognizeCard(imageBase64) {
                 },
 
                 body: JSON.stringify({
-
                     requests: [
-
                         {
                             image: {
                                 content: imageBase64
@@ -85,9 +84,7 @@ async function recognizeCard(imageBase64) {
                                 }
                             ]
                         }
-
                     ]
-
                 })
             }
         );
@@ -104,11 +101,11 @@ async function recognizeCard(imageBase64) {
 
         if (text) {
 
-            findCard(text);
+            await findCard(text);
 
         } else {
 
-            alert("No text found. Try taking a clearer picture.");
+            alert("No text found. Try a clearer picture.");
 
         }
 
@@ -131,7 +128,19 @@ async function findCard(cardText) {
     try {
 
 
-        const name = cardText.split("\n")[0];
+        const lines = cardText.split("\n");
+
+        const name = lines.find(line =>
+            /^[A-Za-z\s\-]+$/.test(line) &&
+            line.length > 2
+        );
+
+
+        if (!name) {
+            alert("Could not read card name.");
+            return;
+        }
+
 
 
         const response = await fetch(
@@ -198,24 +207,18 @@ async function findCard(cardText) {
                 "💰 Price: " + price;
 
 
-
         } else {
 
-
             alert("Card not found in database.");
-
 
         }
 
 
-
     } catch(error) {
-
 
         console.error(error);
 
         alert("Card search error: " + error.message);
-
 
     }
 
