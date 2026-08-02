@@ -24,8 +24,6 @@ scanButton.onclick = async () => {
         video.style.display = "block";
         captureButton.style.display = "inline-block";
 
-        // Test the Pokémon TCG API
-        await testCardLookup();
 
     } catch (err) {
         alert("Camera error: " + err.message);
