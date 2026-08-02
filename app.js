@@ -96,8 +96,9 @@ async function recognizeCard(imageBase64) {
 
 
         const text =
-        alert("Vision read:\n\n" + text);
-            data.responses[0]?.fullTextAnnotation?.text || "";
+    data.responses[0]?.fullTextAnnotation?.text || "";
+
+alert("Vision read:\n\n" + text);
 
 
         if (text) {
@@ -147,7 +148,7 @@ const name = possibleNames[0];
 
 
         const response = await fetch(
-            ,`${API_URL}?q=name:"${name}"`
+            `${API_URL}?q=name:"${name}"`
 
             {
                 headers: {
