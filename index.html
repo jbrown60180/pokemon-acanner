@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header>
@@ -40,27 +41,48 @@
 
 </div>
 
+
+<div class="card">
+    <h2>🃏 Card Results</h2>
+
+    <img id="cardImage"
+         style="display:none;width:200px;border-radius:10px;">
+
+    <h3 id="cardName"></h3>
+    <p id="cardSet"></p>
+    <p id="cardRarity"></p>
+    <p id="cardPrice"></p>
+
+</div>
+
+
 <div class="card">
     <h2>📚 My Collection</h2>
-    <p>0 Cards</p>
+    <p id="collectionCount">0 Cards</p>
 </div>
+
 
 <div class="card">
     <h2>💰 Collection Value</h2>
-    <p>$0.00</p>
+    <p id="collectionValue">$0.00</p>
 </div>
+
 
 <div class="card">
     <h2>⭐ Favorites</h2>
     <p>No favorite cards yet.</p>
 </div>
 
+
 </main>
+
 
 <div id="scannerArea"></div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="app.js"></script>
+
 
 </body>
 </html>
