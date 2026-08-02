@@ -1,6 +1,8 @@
 const API_KEY = "696bc2a0-fca5-4c63-8861-60590a2c6a7d";
 const API_URL = "https://api.pokemontcg.io/v2/cards";
 
+const VISION_KEY = "AIzaSyAEJ6wn4pXm4bh3w0IXxdCmdNHoT6yPUb4";
+
 const scanButton = document.getElementById("scanButton");
 const captureButton = document.getElementById("captureButton");
 
