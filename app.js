@@ -149,7 +149,7 @@ const name = possibleNames[0];
 
 
         const response = await fetch(
-            `${API_URL}?q=name:"${name}"`
+            `${API_URL}?q=name:"${name}"`,
 
             {
                 headers: {
