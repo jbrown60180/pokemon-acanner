@@ -98,7 +98,10 @@ async function recognizeCard(imageBase64) {
         const text =
     data.responses[0]?.fullTextAnnotation?.text || "";
 
+console.log("Vision read:", text);
 alert("Vision read:\n\n" + text);
+
+
 
 
         if (text) {
