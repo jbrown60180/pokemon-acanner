@@ -21,6 +21,10 @@ scanButton.onclick = async () => {
         video.srcObject = stream;
         video.style.display = "block";
         captureButton.style.display = "inline-block";
+
+        // Test the Pokémon TCG API
+        await testCardLookup();
+
     } catch (err) {
         alert("Camera error: " + err.message);
         console.error(err);
@@ -46,18 +50,22 @@ async function testCardLookup() {
             }
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
         const data = await response.json();
 
         console.log(data);
 
-        if (data.data.length > 0) {
-            alert("Success! Found: " + data.data[0].name);
+        if (data.data && data.data.length > 0) {
+            alert("✅ Success! Found: " + data.data[0].name);
         } else {
             alert("No cards found.");
         }
 
     } catch (error) {
         console.error(error);
-        alert("Error connecting to Pokémon TCG API.");
+        alert("Error connecting to Pokémon TCG API: " + error.message);
     }
 }
