@@ -119,10 +119,27 @@ async function findCard(cardText) {
             const card = data.data[0];
 
             alert(
-                "Found Card:\n\n" +
-                card.name +
-                "\nSet: " + card.set.name +
-                "\nRarity: " + card.rarity
+                const cardImage = document.getElementById("cardImage");
+const cardName = document.getElementById("cardName");
+const cardSet = document.getElementById("cardSet");
+const cardRarity = document.getElementById("cardRarity");
+const cardPrice = document.getElementById("cardPrice");
+
+cardImage.src = card.images.large;
+cardImage.style.display = "block";
+
+cardName.textContent = "🃏 " + card.name;
+cardSet.textContent = "📚 Set: " + card.set.name;
+cardRarity.textContent = "⭐ Rarity: " + (card.rarity || "Unknown");
+
+let price = "No price available";
+
+if (card.cardmarket && card.cardmarket.prices) {
+    price = "$" + 
+    (card.cardmarket.prices.averageSellPrice || "0.00");
+}
+
+cardPrice.textContent = "💰 Price: " + price;
             );
 
         } else {
