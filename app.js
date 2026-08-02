@@ -8,32 +8,29 @@ const preview = document.getElementById("preview");
 let stream;
 
 scanButton.onclick = async () => {
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: "environment"
+            }
+        });
 
-    stream = await navigator.mediaDevices.getUserMedia({
-        video:{
-            facingMode:"environment"
-        }
-    });
+        video.srcObject = stream;
+        video.style.display = "block";
+        captureButton.style.display = "inline-block";
+    } catch (err) {
+        alert("Camera error: " + err.message);
+        console.error(err);
+    }
+};
 
-    video.srcObject = stream;
-
-    video.style.display="block";
-
-    captureButton.style.display="inline-block";
-
-}
-
-captureButton.onclick = ()=>{
-
+captureButton.onclick = () => {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
     const ctx = canvas.getContext("2d");
-
-    ctx.drawImage(video,0,0);
+    ctx.drawImage(video, 0, 0);
 
     preview.src = canvas.toDataURL("image/png");
-
-    preview.style.display="block";
-
-}
+    preview.style.display = "block";
+};
